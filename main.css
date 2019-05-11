@@ -1,0 +1,44 @@
+* {
+    box-sizing: border-box;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Homepage & general styling */
+
+.pageheader {
+    text-align: center;
+}
+
+.homelinks {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+}
+
+.homelink {
+    margin: 10px;
+    padding: 40px 20px;
+    border-radius: 10px;
+    border: 1px black solid;
+    width: 25%;
+    text-align: center;
+}
+
+/* Bestseller List Page */
+
+.bestsellerform {
+    text-align: center;
+}
+
+.bestsellerbookcover {
+    height: 194px;
+    width: auto;
+}
+
+.bestsellerlistresultsList {
+    list-style: none;
+}

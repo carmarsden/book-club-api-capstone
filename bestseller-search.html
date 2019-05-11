@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="What should my book club read next? Search books and view bestseller lists to find out.">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/6.0.0/normalize.css">
+        <link rel="stylesheet" href="main.css">
+        <title>What To Read? | Bestseller Search</title>
+    </head>
+    <body>
+        <h1 class="pageheader">Show me some bestsellers!</h1>
+        <section class="searchform">
+            <form class="bestsellerform">
+                    <label>Bestsellers from when? <input type="date" id="bestsellerlistdate" min="2008-06-08" value="2019-05-06"></label><br>
+                    <label>What kind of books? 
+                        <select id="bestsellerlisttype">
+                            <option value="combined-print-and-e-book-fiction" selected>Overall Fiction</option>
+                            <option value="combined-print-and-e-book-nonfiction">Overall Nonfiction</option>
+                            <option value="advice-how-to-and-miscellaneous">Advice, How-To & Miscellaneous</option>
+                            <option value="young-adult-hardcover">Young Adult</option>
+                        </select>
+                    </label><br>
+                    <input type="submit" value="Show me!">
+                </fieldset>
+            </form>
+        </section>
+        <section class="bestsellerlistresults hidden">
+            <p id="js-error-message" class="error-message"></p>
+            <h2>Bestseller List</h2>
+            <p>Click any entry for more information!</p>
+            <ul id="bestsellerlistresultsList">
+            </ul>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="bestseller-search.js"></script>
+    </body>
+</html>
