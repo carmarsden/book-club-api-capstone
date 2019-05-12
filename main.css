@@ -30,7 +30,7 @@
 
 /* Bestseller List Page */
 
-.bestsellerform {
+.bestsellerform, .booksearchform {
     text-align: center;
 }
 

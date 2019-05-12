@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="What should my book club read next? Search books and view bestseller lists to find out.">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/6.0.0/normalize.css">
+        <link rel="stylesheet" href="main.css">
+        <title>What To Read? | Book Search</title>
+    </head>
+    <body>
+        <h1 class="pageheader">Search for some books!</h1>
+        <section class="searchform">
+            <form class="booksearchform">
+                    <label>General Search Terms <input type="text" id="booksearchgeneral"></label><br>
+                    <label>Specific Author? <input type="text" id="booksearchauthor"></label><br>
+                    <label>Specific Title? <input type="text" id="booksearchtitle"></label><br>
+                    <label>Specific Genre/Subject? <input type="text" id="booksearchsubject"></label><br>
+                    <p><i>Note: Google Books uses <a href="https://bisg.org/page/BISACEdition" target="_blank">BISG</a> genre categories, copying a direct category name will yield best results, e.g. "FICTION / Fantasy / Epic"</i></p>
+                    <input type="submit" value="Search!">
+            </form>
+        </section>
+        <section class="booksearchresults hidden">
+            <p id="js-error-message" class="error-message"></p>
+            <h2>Search Results</h2>
+            <p>Click any entry for more information!</p>
+            <ul id="booksearchresultsList">
+            </ul>
+        </section>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="book-search.js"></script>
+    </body>
+</html>
