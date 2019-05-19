@@ -9,13 +9,13 @@ function renderList(array) {
     // render each book in the array list to the DOM
     for (let i = 0; i < array.length; i++){
         $('.bestsellerresults-list').append(
-          `<li><button type="button" class="bestsellerresults-item" id="${array[i].primary_isbn10}">
+          `<li><button type="button" class="bestsellerresults-item" id="${array[i].primary_isbn13}">
           <img src="${array[i].book_image}" class="results-cover" alt="Book cover image for ${array[i].title}">
           <h3 class="results-title">${array[i].title}</h3>
           <h4 class="results-author">By ${array[i].author}</h4>
           <p class="results-description">Description: ${array[i].description}</p>
           </button>
-          <div class="gbinfodiv hidden" id="gbInfo${array[i].primary_isbn10}"></div></li>`
+          <div class="gbinfodiv hidden" id="gbInfo${array[i].primary_isbn13}"></div></li>`
     )};
     $('.bestsellerresults').removeClass('hidden');
 }
@@ -42,8 +42,9 @@ function getList(date, type) {
         populateListResults(responseJson);
     })
     .catch(err => {
-        $('#js-error-message').text(`Something went wrong: ${err.message}`);
-        });
+        $('.error-message').removeClass('hidden');
+        $('#js-error-message').append(`Something went wrong: ${err.message}`);
+    });
 }
 
 function returnSunday(listDateInput) {
@@ -79,14 +80,17 @@ function watchForm() {
 
 /* Functionality for Google Books API */
 
-function formatCategories(catarray) {
-    let categories = '<ul>';
-    for (let i = 0; i < catarray.length; i++) {
-        categories += `<li>${catarray[i]}</li>`
-    };
-    categories += '</ul>'
-    console.log(`categories html: ${categories}`);
-    return categories;   
+function formatCategories(volumeInfo) {
+    if ('categories' in volumeInfo) {
+        let categories = '<ul>';
+        for (let i = 0; i < volumeInfo.categories.length; i++) {
+            categories += `<li>${volumeInfo.categories[i]}</li>`
+        };
+        categories += '</ul>'
+        return categories;
+    } else {
+        return 'Not available';
+    }
 }
 
 function formatRatings(volumeInfo) {
@@ -121,7 +125,7 @@ function renderGBinfo(volumeInfo, isbn) {
       √  Avg rating, # of ratings
       √  Link to Google Books page */
 
-    const categories = formatCategories(volumeInfo.categories);
+    const categories = formatCategories(volumeInfo);
     const ratings = formatRatings(volumeInfo);
     const largerImg = formatLargerImg(volumeInfo);
 
@@ -134,7 +138,7 @@ function renderGBinfo(volumeInfo, isbn) {
         </div>
         <h3>${volumeInfo.title}</h3>
         <h4>Genre(s):</h4>${categories}
-        <h4>Page Count: ${volumeInfo.printedPageCount}</h4>
+        <h4>Page Count: ${volumeInfo.pageCount}</h4>
         <h4>Ratings:</h4>${ratings}
         <h4>Description:</h4><p>${volumeInfo.description}</p>
         <a href="${volumeInfo.previewLink}" target="_blank" class="moreinfo-link">More Info</a>
@@ -171,7 +175,9 @@ function getGoogleBooksInfo(gbVolumeID, isbn) {
         renderGBinfo(responseJson.volumeInfo, isbn);        
     })
     .catch(err => {
-        $('#js-error-message').text(`Something went wrong: ${err.message}`);
+        console.log(err);
+        $('.error-message').removeClass('hidden');
+        $('#js-error-message').append(`Something went wrong: ${err.message}`);
     });
 
 }
@@ -183,7 +189,7 @@ function getGoogleBooksID(isbn) {
     // get the GB volume ID for the first result
     // pass to function to call API for the volume full info
     const params = {
-        q: `ISBN:"${isbn}"`,
+        q: `ISBN:${isbn}`,
         langRestrict: 'en',
         orderBy: 'relevance',
         printType: 'books',
@@ -208,6 +214,7 @@ function getGoogleBooksID(isbn) {
         getGoogleBooksInfo(gbVolumeID, isbn);        
     })
     .catch(err => {
+        $('.error-message').removeClass('hidden');
         $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
 }

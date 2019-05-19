@@ -19,14 +19,25 @@ function formatAuthors(autharray) {
     } 
 }
 
-function formatCategories(catarray) {
-    let categories = '<ul>';
-    for (let i = 0; i < catarray.length; i++) {
-        categories += `<li>${catarray[i]}</li>`
-    };
-    categories += '</ul>'
-    console.log(`categories html: ${categories}`);
-    return categories;   
+function formatDescription(volumeobj) {
+    if ('searchInfo' in volumeobj) {
+        return volumeobj.searchInfo.textSnippet;
+    } else {
+        return 'Not available';
+    }
+}
+
+function formatCategories(volumeInfo) {
+    if ('categories' in volumeInfo) {
+        let categories = '<ul>';
+        for (let i = 0; i < volumeInfo.categories.length; i++) {
+            categories += `<li>${volumeInfo.categories[i]}</li>`
+        };
+        categories += '</ul>'
+        return categories;
+    } else {
+        return 'Not available';
+    }
 }
 
 function formatRatings(volumeInfo) {
@@ -55,21 +66,32 @@ function formatLargerImg(volumeInfo) {
 
 function renderResults(array) {
     // render each book in the array list to the DOM
+    $('.booksearchresults').removeClass('hidden');
     for (let i = 0; i < array.length; i++){
         let authors = formatAuthors(array[i].volumeInfo.authors);
+        let description = formatDescription(array[i]);
 
         $('.booksearchresults-list').append(
           `<li><button type="button" class="booksearchresults-item" id="${array[i].id}">
           <img src="${array[i].volumeInfo.imageLinks.thumbnail}" class="results-cover" alt="Book cover image for ${array[i].volumeInfo.title}">
           <h3 class="results-title">${array[i].volumeInfo.title}</h3>
           <h4 class="results-author">By ${authors}</h4>
-          <p class="results-description">Description: ${array[i].searchInfo.textSnippet}</p>
+          <p class="results-description">Description: ${description}</p>
           </button>
           <div class="gbinfodiv hidden" id="gbInfo${array[i].id}"></div></li>`
     )};
-    $('.booksearchresults').removeClass('hidden');
 }
 
+
+function checkForResults(responseJson) {
+    if (responseJson.totalItems === 0) {
+        console.log('no results');
+        $('.error-message').removeClass('hidden');
+        $('#js-error-message').text(`Whoops, no results found! Try another search?`);
+    } else {
+        renderResults(responseJson.items);
+    }
+}
 
 function formatQueryParams(qparams, genparams) {
     // format qparams into one long string, formatted appropriately
@@ -128,10 +150,12 @@ function getResults(general, author, title, subject) {
     .then(response => response.json())
     .then(responseJson => {
         console.log(responseJson);
-        renderResults(responseJson.items);        
+        checkForResults(responseJson);
     })
     .catch(err => {
-        $('#js-error-message').text(`Something went wrong: ${err.message}`);
+        console.log(err);
+        $('.error-message').removeClass('hidden');
+        $('#js-error-message').append(`Something went wrong: ${err.message}`);
     });
 }
 
@@ -161,7 +185,7 @@ function renderGBinfo(volumeInfo, bookID) {
       √  Avg rating, # of ratings
       √  Link to Google Books page */
 
-    const categories = formatCategories(volumeInfo.categories);
+    const categories = formatCategories(volumeInfo);
     const ratings = formatRatings(volumeInfo);
     const largerImg = formatLargerImg(volumeInfo);
 
@@ -198,7 +222,7 @@ function getGoogleBooksInfo(bookID) {
         renderGBinfo(responseJson.volumeInfo, bookID);        
     })
     .catch(err => {
-        $('#js-error-message').text(`Something went wrong: ${err.message}`);
+        $('#js-error-message').append(`Something went wrong: ${err.message}`);
     });
 
 }
