@@ -4,13 +4,14 @@
         <meta charset="UTF-8">
         <meta name="description" content="What should my book club read next? Search books and view bestseller lists to find out.">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/6.0.0/normalize.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text|Open+Sans&display=swap">
         <link rel="stylesheet" href="main.css">
         <title>What To Read? | Bestseller Search</title>
     </head>
     <body>
         <h1 class="pageheader">Show me some bestsellers!</h1>
-        <section class="searchform">
-            <form class="bestsellerform">
+        <section>
+            <form class="searchform">
                     <label>Bestsellers from when? <input type="date" id="bestsellerlistdate" min="2008-06-08" value="2019-04-02"></label><br>
                     <label>What kind of books? 
                         <select id="bestsellerlisttype">
@@ -20,15 +21,15 @@
                             <option value="young-adult-hardcover">Young Adult</option>
                         </select>
                     </label><br>
-                    <input type="submit" value="Show me!">
+                    <input type="submit" class="submitbutton" value="Show me!">
                 </fieldset>
             </form>
         </section>
-        <section class="bestsellerlistresults hidden">
+        <section class="bestsellerresults hidden">
             <p id="js-error-message" class="error-message"></p>
             <h2>Bestseller List</h2>
             <p>Click any entry for more information!</p>
-            <ul id="bestsellerlistresultsList">
+            <ul class="bestsellerresults-list">
             </ul>
         </section>
 

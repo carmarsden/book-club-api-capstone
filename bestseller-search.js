@@ -8,16 +8,16 @@ const GBapiKey = 'AIzaSyCL80HUXTJM_Mt5mfwjUufdxejx83s9coA';
 function renderList(array) {
     // render each book in the array list to the DOM
     for (let i = 0; i < array.length; i++){
-        $('#bestsellerlistresultsList').append(
-          `<li><button type="button" class="bestsellerlistresultsItem" id="${array[i].primary_isbn10}">
-          <img src="${array[i].book_image}" class="bestsellerbookcover" alt="Book cover image for ${array[i].title}">
-          <h3>${array[i].title}</h3>
-          <h4>By ${array[i].author}</h4>
-          <p>Description: ${array[i].description}</p>
+        $('.bestsellerresults-list').append(
+          `<li><button type="button" class="bestsellerresults-item" id="${array[i].primary_isbn10}">
+          <img src="${array[i].book_image}" class="results-cover" alt="Book cover image for ${array[i].title}">
+          <h3 class="results-title">${array[i].title}</h3>
+          <h4 class="results-author">By ${array[i].author}</h4>
+          <p class="results-description">Description: ${array[i].description}</p>
           </button>
-          <div class="gbInfoDiv hidden" id="gbInfo${array[i].primary_isbn10}"></div></li>`
+          <div class="gbinfodiv hidden" id="gbInfo${array[i].primary_isbn10}"></div></li>`
     )};
-    $('.bestsellerlistresults').removeClass('hidden');
+    $('.bestsellerresults').removeClass('hidden');
 }
 
 function populateListResults(responseJson) {
@@ -66,12 +66,13 @@ function returnSunday(listDateInput) {
 
 function watchForm() {
     // watch the main search form for submission
-    $('.bestsellerform').submit(event => {
+    $('.searchform').submit(event => {
         event.preventDefault();
         const listDateInput = $('#bestsellerlistdate').val();
         const listDate = returnSunday(listDateInput);
         const listType = $('#bestsellerlisttype').val();
-        $('#bestsellerlistresultsList').empty();
+        $('.bestsellerresults-list').empty();
+        $('#js-error-message').empty();
         getList(listDate, listType);
     });
 }
@@ -101,11 +102,11 @@ function formatRatings(volumeInfo) {
 function formatLargerImg(volumeInfo) {
     let largerImg = '';
     if ('medium' in volumeInfo.imageLinks) {
-        largerImg = `<img src="${volumeInfo.imageLinks.medium}" class="bookinfocover" alt="Larger book cover for ${volumeInfo.title}">`;
+        largerImg = `<img src="${volumeInfo.imageLinks.medium}" class="moreinfo-cover" alt="Larger book cover for ${volumeInfo.title}">`;
     } else if ('small' in volumeInfo.imageLinks) {
-        largerImg = `<img src="${volumeInfo.imageLinks.small}" class="bookinfocover" alt="Larger book cover for ${volumeInfo.title}">`;
+        largerImg = `<img src="${volumeInfo.imageLinks.small}" class="moreinfo-cover" alt="Larger book cover for ${volumeInfo.title}">`;
     } else if ('thumbnail' in volumeInfo.imageLinks) {
-        largerImg = `<img src="${volumeInfo.imageLinks.thumbnail}" class="bookinfocover" alt="Larger book cover for ${volumeInfo.title}">`;
+        largerImg = `<img src="${volumeInfo.imageLinks.thumbnail}" class="moreinfo-cover" alt="Larger book cover for ${volumeInfo.title}">`;
     }
     return largerImg;
 }
@@ -124,17 +125,22 @@ function renderGBinfo(volumeInfo, isbn) {
     const ratings = formatRatings(volumeInfo);
     const largerImg = formatLargerImg(volumeInfo);
 
-    $('#bestsellerlistresultsList').find(`#gbInfo${isbn}`).append(
-        `<h3>${volumeInfo.title}</h3>
+    $('.bestsellerresults-list').find(`#gbInfo${isbn}`).append(
+        `<div class="moreinfo-cover-container">
+            <a href="${volumeInfo.previewLink}" target="_blank">
+            ${largerImg}
+            <span class="moreinfo-hoverspan">More Info</span>
+            </a>
+        </div>
+        <h3>${volumeInfo.title}</h3>
         <h4>Genre(s):</h4>${categories}
         <h4>Page Count: ${volumeInfo.printedPageCount}</h4>
         <h4>Ratings:</h4>${ratings}
         <h4>Description:</h4><p>${volumeInfo.description}</p>
-        <h4><a href="${volumeInfo.previewLink}" target="_blank">More Info</a></h4>
-        ${largerImg}
+        <a href="${volumeInfo.previewLink}" target="_blank" class="moreinfo-link">More Info</a>
         `
     );
-    $('.bestsellerlistresults').find(`#gbInfo${isbn}`).removeClass('hidden');
+    $('.bestsellerresults').find(`#gbInfo${isbn}`).removeClass('hidden');
 }
 
 function formatQueryParams(params) {
@@ -211,10 +217,10 @@ function watchResultsList() {
     // get the ISBN for the book that was clicked
     // if the corresponding div is already unhidden, don't do anything else
     // otherwise, pass isbn to a function to call Google Books API for the ID
-    $('#bestsellerlistresultsList').on('click', '.bestsellerlistresultsItem', function() {
+    $('.bestsellerresults-list').on('click', '.bestsellerresults-item', function() {
         const isbn = $(this).attr('id')
         console.log(`the ISBN for the book you clicked is ${isbn}`)
-        let gbDivClass = $('#bestsellerlistresultsList').find(`#gbInfo${isbn}`).attr('class');
+        let gbDivClass = $('.bestsellerresults-list').find(`#gbInfo${isbn}`).attr('class');
         if (gbDivClass.includes('hidden') === true) {
             getGoogleBooksID(isbn);
         }

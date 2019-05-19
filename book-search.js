@@ -42,11 +42,11 @@ function formatRatings(volumeInfo) {
 function formatLargerImg(volumeInfo) {
     let largerImg = '';
     if ('medium' in volumeInfo.imageLinks) {
-        largerImg = `<img src="${volumeInfo.imageLinks.medium}" class="bookinfocover" alt="Larger book cover for ${volumeInfo.title}">`;
+        largerImg = `<img src="${volumeInfo.imageLinks.medium}" class="moreinfo-cover" alt="Larger book cover for ${volumeInfo.title}">`;
     } else if ('small' in volumeInfo.imageLinks) {
-        largerImg = `<img src="${volumeInfo.imageLinks.small}" class="bookinfocover" alt="Larger book cover for ${volumeInfo.title}">`;
+        largerImg = `<img src="${volumeInfo.imageLinks.small}" class="moreinfo-cover" alt="Larger book cover for ${volumeInfo.title}">`;
     } else if ('thumbnail' in volumeInfo.imageLinks) {
-        largerImg = `<img src="${volumeInfo.imageLinks.thumbnail}" class="bookinfocover" alt="Larger book cover for ${volumeInfo.title}">`;
+        largerImg = `<img src="${volumeInfo.imageLinks.thumbnail}" class="moreinfo-cover" alt="Larger book cover for ${volumeInfo.title}">`;
     }
     return largerImg;
 }
@@ -58,14 +58,14 @@ function renderResults(array) {
     for (let i = 0; i < array.length; i++){
         let authors = formatAuthors(array[i].volumeInfo.authors);
 
-        $('#booksearchresultsList').append(
-          `<li><button type="button" class="booksearchresultsItem" id="${array[i].id}">
-          <img src="${array[i].volumeInfo.imageLinks.thumbnail}" class="booksearchbookcover" alt="Book cover image for ${array[i].volumeInfo.title}">
-          <h3>${array[i].volumeInfo.title}</h3>
-          <h4>By ${authors}</h4>
-          <p>Description: ${array[i].searchInfo.textSnippet}</p>
+        $('.booksearchresults-list').append(
+          `<li><button type="button" class="booksearchresults-item" id="${array[i].id}">
+          <img src="${array[i].volumeInfo.imageLinks.thumbnail}" class="results-cover" alt="Book cover image for ${array[i].volumeInfo.title}">
+          <h3 class="results-title">${array[i].volumeInfo.title}</h3>
+          <h4 class="results-author">By ${authors}</h4>
+          <p class="results-description">Description: ${array[i].searchInfo.textSnippet}</p>
           </button>
-          <div class="gbInfoDiv hidden" id="gbInfo${array[i].id}"></div></li>`
+          <div class="gbinfodiv hidden" id="gbInfo${array[i].id}"></div></li>`
     )};
     $('.booksearchresults').removeClass('hidden');
 }
@@ -137,13 +137,14 @@ function getResults(general, author, title, subject) {
 
 function watchForm() {
     // watch the main search form for submission
-    $('.booksearchform').submit(event => {
+    $('.searchform').submit(event => {
         event.preventDefault();
         const searchGeneral = $('#booksearchgeneral').val();
         const searchAuthor = $('#booksearchauthor').val();
         const searchTitle = $('#booksearchtitle').val();
         const searchSubject = $('#booksearchsubject').val();
-        $('#booksearchresultsList').empty();
+        $('.booksearchresults-list').empty();
+        $('#js-error-message').empty();
         getResults(searchGeneral, searchAuthor, searchTitle, searchSubject);
     });
 }
@@ -164,14 +165,19 @@ function renderGBinfo(volumeInfo, bookID) {
     const ratings = formatRatings(volumeInfo);
     const largerImg = formatLargerImg(volumeInfo);
 
-    $('#booksearchresultsList').find(`#gbInfo${bookID}`).append(
-        `<h3>${volumeInfo.title}</h3>
+    $('.booksearchresults-list').find(`#gbInfo${bookID}`).append(
+        `<div class="moreinfo-cover-container">
+            <a href="${volumeInfo.previewLink}" target="_blank">
+            ${largerImg}
+            <span class="moreinfo-hoverspan">More Info</span>
+            </a>
+        </div>
+        <h3>${volumeInfo.title}</h3>
         <h4>Subject(s):</h4>${categories}
         <h4>Page Count: ${volumeInfo.printedPageCount}</h4>
         <h4>Ratings:</h4>${ratings}
         <h4>Description:</h4><p>${volumeInfo.description}</p>
-        <h4><a href="${volumeInfo.previewLink}" target="_blank">More Info</a></h4>
-        ${largerImg}
+        <a href="${volumeInfo.previewLink}" target="_blank" class="moreinfo-link">More Info</a>
         `
     );
     $('.booksearchresults').find(`#gbInfo${bookID}`).removeClass('hidden');
@@ -202,10 +208,10 @@ function watchResultsList() {
     // get the id for the book that was clicked
     // if the corresponding div is already unhidden, don't do anything else
     // otherwise, pass id to a function to call Google Books API for the ID
-    $('#booksearchresultsList').on('click', '.booksearchresultsItem', function() {
+    $('.booksearchresults-list').on('click', '.booksearchresults-item', function() {
         const bookID = $(this).attr('id')
         console.log(`the Google Books ID for the book you clicked is ${bookID}`)
-        let gbDivClass = $('#booksearchresultsList').find(`#gbInfo${bookID}`).attr('class');
+        let gbDivClass = $('.booksearchresults-list').find(`#gbInfo${bookID}`).attr('class');
         if (gbDivClass.includes('hidden') === true) {
             getGoogleBooksInfo(bookID);
         }

@@ -8,8 +8,15 @@
 
 /* Homepage & general styling */
 
-.pageheader {
+.pageheader, h2 {
     text-align: center;
+    font-family: 'Crimson Text', serif;
+    color: #8F320D;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    color: #303030	;
 }
 
 .homelinks {
@@ -23,22 +30,150 @@
     margin: 10px;
     padding: 40px 20px;
     border-radius: 10px;
-    border: 1px black solid;
+    border: 2px #8F570D solid;
     width: 25%;
     text-align: center;
+    text-decoration: none;
+    color: #8F570D;
 }
 
-/* Bestseller List Page */
+.homelink:hover, .homelink:active {
+    background-color: #FFD8A3;
+    text-decoration: none;
+}
 
-.bestsellerform, .booksearchform {
+
+/* Search Styling */
+
+.searchform {
+    text-align: center;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.submitbutton {
+    border: 1px #8F320D solid;
+    border-radius: 2px;
+    background-color: white;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.bestsellerresults, .booksearchresults {
     text-align: center;
 }
 
-.bestsellerbookcover {
-    height: 194px;
-    width: auto;
+.bestsellerresults-list, .booksearchresults-list {
+    list-style: none;
 }
 
-.bestsellerlistresultsList {
-    list-style: none;
+.bestsellerresults-item, .booksearchresults-item {
+    width: 90%;
+    border: 2px #8F570D solid;
+    border-radius: 4px;
+    margin: 10px 0;
+    padding: 10px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.results-cover {
+    height: 150px;
+    width: auto;
+    float: left;
+    margin: 10px;
+}
+
+.results-title {
+    color: #8F570D;
+    font-size: 16px;
+}
+
+.results-author, .results-description {
+    color: #303030	;
+    font-size: 14px;
+}
+
+
+/* More Info Div Styling */
+
+.gbinfodiv {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px #8F570D solid;
+    border-radius: 4px;
+    text-align: left;
+    padding: 1%;
+}
+
+.gbinfodiv h3 {
+    color: #8F570D;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.gbinfodiv h4 {
+    color: #8F570D;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.moreinfo-link {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    background-color: #FFD8A3;
+    color: #8F570D;
+    border-radius: 4px;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.moreinfo-link:hover, .moreinfo-link:active {
+    color: #FFD8A3;
+    background-color: #8F570D;
+}
+
+.moreinfo-cover-container {
+    position: relative;
+    float: right;
+    padding: 0;
+    margin: 20px;
+    width: 30%;
+    height: fit-content;
+}
+
+.moreinfo-cover {
+    width: 100%;
+    height: auto;
+}
+
+.moreinfo-hoverspan {
+    opacity: 0;
+    padding: 20px;
+    display: inline-block;
+    border-top: #8F570D 1px solid;
+    border-bottom: #8F570D 1px solid;
+    width: 100%;
+    color: #8F570D;
+    background-color: #FFD8A3;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-style: italic;
+    font-size: 16px;
+    position: absolute;
+    top: 30%;
+}
+
+.moreinfo-cover-container:hover .moreinfo-hoverspan {
+    opacity: 1;
+}
+
+.moreinfo-cover-container:hover .moreinfo-cover {
+    filter: grayscale(100%) blur(1px);
+    opacity: 0.6;
 }
