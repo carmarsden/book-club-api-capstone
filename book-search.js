@@ -6,13 +6,17 @@ const GBapiKey = 'AIzaSyCL80HUXTJM_Mt5mfwjUufdxejx83s9coA';
 
 /* Formatting object/array results into a way that can be rendered */
 
-function formatAuthors(autharray) {
-    if (autharray.length === 1) {
-        return `${autharray[0]}`
+function formatAuthors(volumeInfo) {
+    if (!('authors' in volumeInfo)) {
+        return 'Not available'
+    }
+
+    if (volumeInfo.authors.length === 1) {
+        return `${volumeInfo.authors[0]}`
     } else {
         let authors = '';
-        for (let i = 0; i < autharray.length; i++) {
-            authors += `, ${autharray[i]}`
+        for (let i = 0; i < volumeInfo.authors.length; i++) {
+            authors += `, ${volumeInfo.authors[i]}`
         };
         authors = authors.slice(2);
         return authors;
@@ -26,6 +30,15 @@ function formatDescription(volumeobj) {
         return 'Not available';
     }
 }
+
+function formatThumbnail(volumeInfo) {
+    if ('imageLinks' in volumeInfo) {
+        return `<img src="${volumeInfo.imageLinks.thumbnail}" class="results-cover" alt="Book cover image for ${volumeInfo.title}">`
+    } else {
+        return '';
+    }
+}
+
 
 function formatCategories(volumeInfo) {
     if ('categories' in volumeInfo) {
@@ -68,12 +81,13 @@ function renderResults(array) {
     // render each book in the array list to the DOM
     $('.booksearchresults').removeClass('hidden');
     for (let i = 0; i < array.length; i++){
-        let authors = formatAuthors(array[i].volumeInfo.authors);
+        let authors = formatAuthors(array[i].volumeInfo);
         let description = formatDescription(array[i]);
+        let thumbnail = formatThumbnail(array[i].volumeInfo);
 
         $('.booksearchresults-list').append(
           `<li><button type="button" class="booksearchresults-item" id="${array[i].id}">
-          <img src="${array[i].volumeInfo.imageLinks.thumbnail}" class="results-cover" alt="Book cover image for ${array[i].volumeInfo.title}">
+          ${thumbnail}
           <h3 class="results-title">${array[i].volumeInfo.title}</h3>
           <h4 class="results-author">By ${authors}</h4>
           <p class="results-description">Description: ${description}</p>
@@ -119,7 +133,9 @@ function formatQueryParams(qparams, genparams) {
 }
 
 function getResults(general, author, title, subject) {
-    // call Google Books API for the date and list type specified
+    // format parameters
+    // make sure there is a query
+    // call Google Books API for full parameters
     // run function to populate results
     const qparams = {
         q: general,
@@ -141,6 +157,12 @@ function getResults(general, author, title, subject) {
     const gbHeaders = new Headers({
         'x-api-key': GBapiKey
     })
+
+    if (queryString.endsWith('q=')) {
+        $('.error-message').removeClass('hidden');
+        $('#js-error-message').append(`Whoops, make sure you have entered some search terms!`);
+        return;
+    }
 
     console.log(url);
 
@@ -214,6 +236,7 @@ function getGoogleBooksInfo(bookID) {
         renderGBinfo(responseJson.volumeInfo, bookID);        
     })
     .catch(err => {
+        $('.error-message').removeClass('hidden');
         $('#js-error-message').append(`Something went wrong: ${err.message}`);
     });
 

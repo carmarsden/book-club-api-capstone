@@ -86,6 +86,11 @@ footer a:hover, footer a:active {
     font-weight: 700;
 }
 
+.error-message {
+    color: #8F320C;
+    text-align: center;
+}
+
 
 /* Home Page Styling */
 

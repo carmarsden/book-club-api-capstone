@@ -18,7 +18,7 @@
         </header> 
         <section>
             <form class="searchform">
-                    <label>Bestsellers from when? <input type="date" id="bestsellerlistdate" min="2008-06-08" value="2019-04-02"></label><br>
+                    <label>Bestsellers from when? <input type="date" id="bestsellerlistdate" min="2008-06-08" value="2019-01-01"></label><br>
                     <label>What kind of books? 
                         <select id="bestsellerlisttype">
                             <option value="combined-print-and-e-book-fiction" selected>Overall Fiction</option>
@@ -34,12 +34,12 @@
         <section class="error-message hidden">
             <p id="js-error-message"></p>
         </section>
-        <section class="bestsellerresults hidden">
+        <main role="main" class="bestsellerresults hidden">
             <h2 class="resultsheader">Bestseller List</h2>
             <p>Click any entry for more information!</p>
             <ul class="bestsellerresults-list">
             </ul>
-        </section>
+        </main>
         <footer>
             <a href="#">Back to Top</a>
         </footer>

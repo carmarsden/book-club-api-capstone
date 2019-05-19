@@ -64,7 +64,10 @@ function returnSunday(listDateInput) {
 }
 
 function watchForm() {
+    // set form date to default to today
     // watch the main search form for submission
+    const today = new Date().toJSON().slice(0,10);
+    $('#bestsellerlistdate').attr('value', today);
     $('.searchform').submit(event => {
         event.preventDefault();
         const listDateInput = $('#bestsellerlistdate').val();
