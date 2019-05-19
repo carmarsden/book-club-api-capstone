@@ -6,40 +6,125 @@
     display: none;
 }
 
-/* Homepage & general styling */
-
-.pageheader, h2 {
-    text-align: center;
-    font-family: 'Crimson Text', serif;
-    color: #8F320D;
+:root {
+    scroll-behavior: smooth;
 }
+
+/* General styling */
 
 body {
     font-family: 'Open Sans', sans-serif;
-    color: #303030	;
+    color: #303030;
+    font-size: 14px;
+    line-height: 20px;
+    padding-top: 10px;
 }
+
+a {
+    color: #8F6E0C;
+}
+
+a:hover, a:active {
+    text-decoration: none;
+}
+
+.pageheader {
+    text-align: center;
+    font-family: 'Crimson Text', serif;
+    color: #8F320D;
+    font-size: 30px;
+}
+
+.aboutheader, .resultsheader {
+    text-align: center;
+    font-family: 'Crimson Text', serif;
+    color: #8F570D;
+    font-size: 26px;
+}
+
+nav {
+    text-align: center;
+}
+
+.navlink {
+    display: inline-block;
+    width: 40%;
+    border: 2px #8F6E0C solid;
+    border-radius: 4px;
+    margin: 4px;
+    color: #8F6E0C;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.navlink:hover {
+    box-shadow: 2px 2px #D3B047;
+    transition: all .05s linear;
+}
+
+.navlink:active {
+    box-shadow: none;
+    transform: translate(2px, 2px);
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 5px;
+    border-top: 2px #8F6E0C solid;
+    background-color: #FFFFFF;
+}
+
+footer a {
+    text-decoration: none;
+}
+
+footer a:hover, footer a:active {
+    font-weight: 700;
+}
+
+
+/* Home Page Styling */
 
 .homelinks {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
-    align-content: center;
+    align-items: center;
 }
 
 .homelink {
     margin: 10px;
     padding: 40px 20px;
     border-radius: 10px;
-    border: 2px #8F570D solid;
-    width: 25%;
+    border: 2px #8F320C solid;
+    width: 60%;
+    min-width: 200px;
+    min-height: 120px;
     text-align: center;
     text-decoration: none;
-    color: #8F570D;
+    color: #8F320C;
 }
 
-.homelink:hover, .homelink:active {
-    background-color: #FFD8A3;
-    text-decoration: none;
+.homelink:hover {
+    box-shadow: 4px 4px #D36F47;
+    transition: all .05s linear;
+}
+
+.homelink:active {
+    box-shadow: none;
+    transform: translate(4px, 4px);
+}
+
+.about {
+    width: 80%;
+    margin: 40px auto 40px auto;
+    border: 2px #8F570C solid;
+    border-radius: 10px;
+    padding: 40px 20px;
 }
 
 
@@ -53,15 +138,25 @@ body {
 }
 
 .submitbutton {
-    border: 1px #8F320D solid;
+    border: 2px #8F320D solid;
     border-radius: 2px;
-    background-color: white;
+    box-shadow: 2px 2px #D36F47;
+    transition: all .05s linear;
+    background-color: #FFFFFF;
+    color: #303030;
     font-size: 14px;
     margin: 5px 0;
+    cursor: pointer;
+}
+
+.submitbutton:active {
+    box-shadow: 1px 1px #D36F47;
+    transform: translate(1px, 1px);
 }
 
 .bestsellerresults, .booksearchresults {
     text-align: center;
+    margin-bottom: 30px;
 }
 
 .bestsellerresults-list, .booksearchresults-list {
@@ -75,6 +170,7 @@ body {
     margin: 10px 0;
     padding: 10px;
     font-family: 'Open Sans', sans-serif;
+    cursor: pointer;
 }
 
 .results-cover {
@@ -176,4 +272,18 @@ body {
 .moreinfo-cover-container:hover .moreinfo-cover {
     filter: grayscale(100%) blur(1px);
     opacity: 0.6;
+}
+
+
+
+/* Media Queries for Desktop */
+
+@media screen and (min-width: 600px) {
+    .homelinks {
+        flex-direction: row;
+    }
+
+    .homelink {
+        width: 30%;
+    }
 }

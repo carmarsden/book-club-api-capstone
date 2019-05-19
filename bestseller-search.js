@@ -24,16 +24,14 @@ function populateListResults(responseJson) {
     // store the books as an array
     // call renderList on the books in the list
     const listResults = responseJson.results.books;
-    console.log(listResults);
     renderList(listResults);
 }
 
 function getList(date, type) {
     // call NYT API for the date and list type specified
     // run function to populate results
-    console.log(`this is looking for list of ${type} from ${date}`);
     const url = `https://api.nytimes.com/svc/books/v3/lists/${date}/${type}.json?api-key=${NYTapiKey}`;
-    console.log(`searching at url: ${url}`);
+    console.log(url);
 
     fetch(url)
     .then(response => response.json())
@@ -117,13 +115,7 @@ function formatLargerImg(volumeInfo) {
 
 function renderGBinfo(volumeInfo, isbn) {
     // find the right place to put the results
-    /* add a div to display the following info:
-      √  Larger cover image
-      √  Long description 
-      √  Category/subject
-      √  Page count
-      √  Avg rating, # of ratings
-      √  Link to Google Books page */
+    // add a div to display more info
 
     const categories = formatCategories(volumeInfo);
     const ratings = formatRatings(volumeInfo);
@@ -226,7 +218,6 @@ function watchResultsList() {
     // otherwise, pass isbn to a function to call Google Books API for the ID
     $('.bestsellerresults-list').on('click', '.bestsellerresults-item', function() {
         const isbn = $(this).attr('id')
-        console.log(`the ISBN for the book you clicked is ${isbn}`)
         let gbDivClass = $('.bestsellerresults-list').find(`#gbInfo${isbn}`).attr('class');
         if (gbDivClass.includes('hidden') === true) {
             getGoogleBooksID(isbn);

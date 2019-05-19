@@ -85,7 +85,6 @@ function renderResults(array) {
 
 function checkForResults(responseJson) {
     if (responseJson.totalItems === 0) {
-        console.log('no results');
         $('.error-message').removeClass('hidden');
         $('#js-error-message').text(`Whoops, no results found! Try another search?`);
     } else {
@@ -112,7 +111,6 @@ function formatQueryParams(qparams, genparams) {
         qstring += `+subject:"${qparams.subject}"`
     }
 
-    console.log(`new qparam string is ${qstring}`);
     genparams.q = qstring;
 
     const queryItems = Object.keys(genparams)
@@ -177,13 +175,7 @@ function watchForm() {
 
 function renderGBinfo(volumeInfo, bookID) {
     // find the right place to put the results
-    /* add a div to display the following info:
-      √  Larger cover image
-      √  Long description 
-      √  Category/subject
-      √  Page count
-      √  Avg rating, # of ratings
-      √  Link to Google Books page */
+    // add a div to display more info
 
     const categories = formatCategories(volumeInfo);
     const ratings = formatRatings(volumeInfo);
@@ -234,7 +226,6 @@ function watchResultsList() {
     // otherwise, pass id to a function to call Google Books API for the ID
     $('.booksearchresults-list').on('click', '.booksearchresults-item', function() {
         const bookID = $(this).attr('id')
-        console.log(`the Google Books ID for the book you clicked is ${bookID}`)
         let gbDivClass = $('.booksearchresults-list').find(`#gbInfo${bookID}`).attr('class');
         if (gbDivClass.includes('hidden') === true) {
             getGoogleBooksInfo(bookID);

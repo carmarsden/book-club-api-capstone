@@ -4,12 +4,18 @@
         <meta charset="UTF-8">
         <meta name="description" content="What should my book club read next? Search books and view bestseller lists to find out.">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/6.0.0/normalize.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text|Open+Sans&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text|Open+Sans:400,700&display=swap">
         <link rel="stylesheet" href="main.css">
         <title>What To Read? | Bestseller Search</title>
     </head>
     <body>
-        <h1 class="pageheader">Show me some bestsellers!</h1>
+        <nav role="navigation">
+            <a href="index.html" class="navlink">Home</a>
+            <a href="book-search.html" class="navlink">Book Search</a>
+        </nav>
+        <header role="banner">
+            <h1 class="pageheader">Show me some bestsellers!</h1>
+        </header> 
         <section>
             <form class="searchform">
                     <label>Bestsellers from when? <input type="date" id="bestsellerlistdate" min="2008-06-08" value="2019-04-02"></label><br>
@@ -29,12 +35,15 @@
             <p id="js-error-message"></p>
         </section>
         <section class="bestsellerresults hidden">
-            <h2>Bestseller List</h2>
+            <h2 class="resultsheader">Bestseller List</h2>
             <p>Click any entry for more information!</p>
             <ul class="bestsellerresults-list">
             </ul>
         </section>
-
+        <footer>
+            <a href="#">Back to Top</a>
+        </footer>
+    
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
         <script src="bestseller-search.js"></script>
     </body>
