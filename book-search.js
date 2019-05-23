@@ -173,9 +173,8 @@ function getResults(general, author, title, subject) {
         checkForResults(responseJson);
     })
     .catch(err => {
-        console.log(err);
         $('.error-message').removeClass('hidden');
-        $('#js-error-message').append(`Something went wrong: ${err.message}`);
+        $('#js-error-message').append(`Whoops, something went wrong: ${err.message}`);
     });
 }
 
