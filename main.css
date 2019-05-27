@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    font-size: 100%;
 }
 
 .hidden {
@@ -15,8 +16,8 @@
 body {
     font-family: 'Open Sans', sans-serif;
     color: #303030;
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 0.9em;
+    line-height: 1.375em;
     padding-top: 10px;
 }
 
@@ -32,14 +33,16 @@ a:hover, a:active {
     text-align: center;
     font-family: 'Crimson Text', serif;
     color: #8F320D;
-    font-size: 30px;
+    font-size: 2em;
+    line-height: 1.25em;
 }
 
 .aboutheader, .resultsheader {
     text-align: center;
     font-family: 'Crimson Text', serif;
     color: #8F570D;
-    font-size: 26px;
+    font-size: 1.625em;
+    line-height: 1.15em;
 }
 
 nav {
@@ -142,6 +145,11 @@ footer a:hover, footer a:active {
     margin-right: auto;
 }
 
+input[type=text], input[type=date] {
+    border: 1px #8F320D solid;
+    border-radius: 2px;
+}
+
 .submitbutton {
     border: 2px #8F320D solid;
     border-radius: 2px;
@@ -149,7 +157,7 @@ footer a:hover, footer a:active {
     transition: all .05s linear;
     background-color: #FFFFFF;
     color: #303030;
-    font-size: 14px;
+    font-size: 0.9em;
     margin: 5px 0;
     cursor: pointer;
 }
@@ -172,6 +180,7 @@ footer a:hover, footer a:active {
     width: 90%;
     border: 2px #8F570D solid;
     border-radius: 4px;
+    background-color: #FFFFFF;
     margin: 10px 0;
     padding: 10px;
     font-family: 'Open Sans', sans-serif;
@@ -187,12 +196,13 @@ footer a:hover, footer a:active {
 
 .results-title {
     color: #8F570D;
-    font-size: 16px;
+    font-size: 1.375em;
+    line-height: 1.15em;
 }
 
 .results-author, .results-description {
     color: #303030	;
-    font-size: 14px;
+    font-size: 0.9em;
 }
 
 
@@ -210,14 +220,16 @@ footer a:hover, footer a:active {
 
 .gbinfodiv h3 {
     color: #8F570D;
-    font-size: 18px;
+    font-size: 1.375em;
+    line-height: 1.15em;
     font-weight: bold;
     font-style: italic;
 }
 
 .gbinfodiv h4 {
     color: #8F570D;
-    font-size: 16px;
+    font-size: 1.125em;
+    line-height: 1.1em;
     font-weight: bold;
 }
 
@@ -265,9 +277,11 @@ footer a:hover, footer a:active {
     text-transform: uppercase;
     text-decoration: none;
     font-style: italic;
-    font-size: 16px;
+    font-size: 1em;
     position: absolute;
     top: 30%;
+    left: 0;
+    right: 0;
 }
 
 .moreinfo-cover-container:hover .moreinfo-hoverspan {
@@ -291,4 +305,23 @@ footer a:hover, footer a:active {
     .homelink {
         width: 30%;
     }
+
+    .pageheader {
+        font-size: 3em;
+        line-height: 1.05em;
+    }
+
+    .aboutheader, .resultsheader {
+        font-size: 2.25em;
+        line-height: 1.25em;
+    }
+
+    .results-title, .gbinfodiv h3 {
+        font-size: 1.75em;
+        line-height: 1.25em;
+    }
+
+    .gbinfodiv h4 {
+        line-height: 1.2em;
+    }    
 }
