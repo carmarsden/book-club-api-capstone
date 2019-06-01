@@ -145,9 +145,18 @@ footer a:hover, footer a:active {
     margin-right: auto;
 }
 
-input[type=text], input[type=date] {
+.searchform label {
+    display: inline-block;
+    margin: 5px;
+    font-style: italic;
+}
+
+input[type=text], input[type=date], select {
+    display: block;
     border: 1px #8F320D solid;
     border-radius: 2px;
+    margin: 0 5px;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .submitbutton {
@@ -177,6 +186,8 @@ input[type=text], input[type=date] {
 }
 
 .bestsellerresults-item, .booksearchresults-item {
+    position: relative;
+    left: -5%;
     width: 90%;
     border: 2px #8F570D solid;
     border-radius: 4px;
@@ -190,8 +201,7 @@ input[type=text], input[type=date] {
 .results-cover {
     height: 150px;
     width: auto;
-    float: left;
-    margin: 10px;
+    text-align: center;
 }
 
 .results-title {
@@ -297,6 +307,14 @@ input[type=text], input[type=date] {
 
 /* Media Queries for Desktop */
 
+@media screen and (min-width: 450px) {
+    .results-cover {
+        float: left;
+        margin: 10px;
+    }    
+}
+
+
 @media screen and (min-width: 600px) {
     .homelinks {
         flex-direction: row;
@@ -323,5 +341,10 @@ input[type=text], input[type=date] {
 
     .gbinfodiv h4 {
         line-height: 1.2em;
-    }    
+    }
+
+    input[type=text], input[type=date], select {
+        display: inline-block;
+    }
+    
 }
